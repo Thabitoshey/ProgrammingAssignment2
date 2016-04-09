@@ -1,3 +1,11 @@
+## The purpose of the functions is to cache specific matrix inverse 
+## in order not to calculate it everytime and it works in two steps:
+## 1: assign "makeCacheMatrix" holding the desired matrix to ana object
+##   object <- makeCacheMatrix(my_matrix)
+## 2: pass this object to "cacheSolve" function
+##   cacheSolve(object)
+
+
 
 ## The "makeCacheMatrix" function receieves an matrix 'x'
 ## and returns a list of length 3.
