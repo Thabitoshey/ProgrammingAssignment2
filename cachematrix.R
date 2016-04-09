@@ -1,15 +1,44 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The purpose of the functions is to cache specific matrix inverse 
+## in order not to calculate it everytime and it works in two steps:
+## 1: assign "makeCacheMatrix" holding the desired matrix to ana object
+##   object <- makeCacheMatrix(my_matrix)
+## 2: pass this object to "cacheSolve" function
+##   cacheSolve(object)
 
-## Write a short comment describing this function
+
+
+## The "makeCacheMatrix" function receieves an matrix 'x'
+## and returns a list of length 3.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  i <- NULL   ## i : the inversed matrix
+  
+  get <- function() x    ## list[1]: a function returns the matrix x.
+  setinv <- function(inv) i <<- inv   ## list[2]: a function used to assign i with its value from "cacheSolve" function. 
+  getinv <- function() i   ##list[3]: a function  returns the inversed matrix i.
+  list( get = get,
+       setinv = setinv,
+       getinv = getinv)
+  
 }
 
 
-## Write a short comment describing this function
+## The "cacheSolve" function receives a list returned by "makeCacheMatrix" function
+## and either returns the cached "i" with a message
+## OR compute and return the inverse of the matrix .
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+ ##checking for a previously cached value for the inversed matrix "i"
+  i <- x$getinv()
+  if(!is.null(i)) {
+    message("getting cached data")
+    return(i)
+  }
+  ## computing the matrix inverse .
+  data <- x$get()
+  i <- solve(data, ...)
+  ## assigning the the inversed matrix back to list[2]
+  x$setinv(i)
+  ## return i
+  i
 }
